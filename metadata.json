@@ -1,0 +1,6 @@
+{
+  "name": "Crypto Trading Platform",
+  "description": "A dark-mode fintech crypto trading dashboard featuring real-time charts, wallet system, active trading simulation, admin panel, mining dashboard, and cryptocurrency news.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

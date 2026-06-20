@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile inside the cryptocurrency platform.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "balance": { "type": "number" },
+        "lockedBalance": { "type": "number" },
+        "profit": { "type": "number" },
+        "kycStatus": { "type": "string", "enum": ["UNSUBMITTED", "PENDING", "VERIFIED", "REJECTED"] },
+        "isFrozen": { "type": "boolean" },
+        "referralCode": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["uid", "email", "role", "balance", "lockedBalance", "profit", "kycStatus", "createdAt"]
+    },
+    "Trade": {
+      "title": "Trade",
+      "description": "An open or closed margin/binary trade position.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "asset": { "type": "string" },
+        "type": { "type": "string", "enum": ["buy", "sell"] },
+        "amount": { "type": "number" },
+        "timeFrame": { "type": "string" },
+        "entryPrice": { "type": "number" },
+        "exitPrice": { "type": "number" },
+        "status": { "type": "string", "enum": ["open", "closed", "profit", "loss"] },
+        "timeRemaining": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "asset", "type", "amount", "timeFrame", "entryPrice", "status", "timeRemaining", "createdAt"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "A financial transaction (deposit, withdrawal, transfer) logged in the database.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["deposit", "withdraw", "transfer"] },
+        "coin": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "address": { "type": "string" },
+        "txHash": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "userId", "type", "coin", "amount", "status", "createdAt"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Secure wallets owned by users.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "address": { "type": "string" },
+        "assets": {
+          "type": "array"
+        }
+      },
+      "required": ["userId", "address", "assets"]
+    },
+    "AdminLog": {
+      "title": "AdminLog",
+      "description": "Chronological administrator action audit.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "adminId": { "type": "string" },
+        "adminEmail": { "type": "string" },
+        "action": { "type": "string" },
+        "targetUser": { "type": "string" },
+        "details": { "type": "string" },
+        "timestamp": { "type": "number" }
+      },
+      "required": ["id", "adminId", "adminEmail", "action", "targetUser", "details", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles indexed by UID"
+    },
+    "/trades/{tradeId}": {
+      "schema": "Trade",
+      "description": "Margin and context binary trades"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Transaction registries"
+    },
+    "/wallets/{walletId}": {
+      "schema": "Wallet",
+      "description": "Wallet registers"
+    },
+    "/adminLogs/{logId}": {
+      "schema": "AdminLog",
+      "description": "Chronological administrative compliance audits"
+    }
+  }
+}
